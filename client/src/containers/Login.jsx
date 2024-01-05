@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { loginback7, logo } from "../assets";
 import LoginInput from "../components/LoginInput";
 import { FaEnvelope, FaLock, FcGoogle } from "../assets/icons/index";
 import { motion } from "framer-motion";
 import { buttonClick } from "../animation";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {setUsersDetails} from '../context/actions/userActions'
+
 
 import {GoogleAuthProvider, createUserWithEmailAndPassword, getAuth,signInWithEmailAndPassword,signInWithPopup} from 'firebase/auth'
 import {app} from '../config/firebase.config'
@@ -19,16 +22,26 @@ const Login = () => {
 
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
-
+  
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if(user){
+      navigate("/",{replace:true})
+    }
+
+  }, [user])
 
   const loginWithGoogle = async () => {
-    await signInWithPopup(firebaseAuth,provider).then(userCred => {
+    await signInWithPopup(firebaseAuth,provider).then((userCred) => {
       firebaseAuth.onAuthStateChanged(cred => {
         if(cred){
           cred.getIdToken().then(token => {
             validateUserJWTToken(token).then(data => {
-              console.log(data)
+              dispatch(setUsersDetails(data));
             }) 
             navigate("/",{replace:true})
           })
@@ -50,7 +63,7 @@ const Login = () => {
             if(cred){
               cred.getIdToken().then((token) => {
                 validateUserJWTToken(token).then((data) => {
-                  console.log(data)
+                  dispatch(setUsersDetails(data));
                 })
                 navigate("/",{replace:true})
 
@@ -64,6 +77,7 @@ const Login = () => {
     }
   }
 
+
   const signInWithEmailPass = async () => {
     if(userEmail !== "" && password !== ""){
       await signInWithEmailAndPassword(firebaseAuth,userEmail,password).then(userCred => {
@@ -71,7 +85,7 @@ const Login = () => {
           if(cred){
             cred.getIdToken().then((token) => {
               validateUserJWTToken(token).then((data) => {
-                console.log(data)
+                dispatch(setUsersDetails(data));
               })
               navigate("/",{replace:true})
             })
@@ -94,7 +108,7 @@ const Login = () => {
 
       {/* content box */}
       {/* <div className="flex flex-col items-center bg-lightOverlay w-[80%] md:w-508 h-full z-10 backdrop-blur-md p-4 px-4 py-12 gap-6"> */}
-      <div className="flex flex-col items-center bg-opacity-50 bg-black w-80p md:w-508 h-full z-10 backdrop-blur-md p-4 px-4 py-12 gap-6 rounded-lg shadow-lg">
+      <div className="flex flex-col items-center bg-opacity-50 bg-black w-[80%] md:w-508 h-full z-10 backdrop-blur-md p-4 px-4 py-12 gap-6 rounded-lg shadow-lg">
         {/* logo section */}
         <div className="flex items-center justify-start gap-4 w-full">
           <img src={logo} alt="" className="w-8" />
@@ -167,7 +181,7 @@ const Login = () => {
           {isSignUp ? (
             <motion.button
               {...buttonClick}
-              className="w-full px-4 py-2 rounded-md font-semibold bg-yellow-400 cursor-pointer text-black text-xl capitalize hover:bg-yellow-500 transition-all duration-150"
+              className="w-full px-4 py-2 rounded-md font-semibold bg-yellow-300 cursor-pointer text-black text-xl capitalize hover:bg-yellow-400 transition-all duration-150"
               onClick={signUpWithEmailPass}
             >
               Sign Up
@@ -176,7 +190,7 @@ const Login = () => {
             <motion.button
               {...buttonClick}
               onClick={signInWithEmailPass}
-              className="w-full px-4 py-2 rounded-md font-semibold bg-yellow-400  text-black hover:bg-yellow-500 cursor-pointer text-xl capitalize  transition-all duration-150"
+              className="w-full px-4 py-2 rounded-md font-semibold bg-yellow-300  text-black hover:bg-yellow-400 cursor-pointer text-xl capitalize  transition-all duration-150"
             >
               Sign In
             </motion.button>

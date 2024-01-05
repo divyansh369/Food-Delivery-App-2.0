@@ -1,1 +1,0 @@
-{"name":"Local: f","url":"d:\\project\\food app\\f.cpp","tests":[{"id":1704293412895,"input":"4\n1\n2\n7\n8","output":"1 1\n1 2\n4 7\n4 8"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\project\\food app\\f.cpp","group":"local","local":true}
