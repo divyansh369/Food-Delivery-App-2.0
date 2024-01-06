@@ -6,12 +6,14 @@ import { motion } from "framer-motion";
 import { buttonClick } from "../animation";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {setUsersDetails} from '../context/actions/userActions'
+import {setUserDetails} from '../context/actions/userActions'
+import {alertWarning} from '../context/actions/alertActions'
 
 
 import {GoogleAuthProvider, createUserWithEmailAndPassword, getAuth,signInWithEmailAndPassword,signInWithPopup} from 'firebase/auth'
 import {app} from '../config/firebase.config'
 import { validateUserJWTToken } from "../api/index.";
+import { alertInfo } from "../context/actions/alertActions";
 
 
 const Login = () => {
@@ -27,6 +29,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
+  const alert = useSelector((state) => state.alert);
 
   useEffect(() => {
     if(user){
@@ -36,66 +39,70 @@ const Login = () => {
   }, [user])
 
   const loginWithGoogle = async () => {
-    await signInWithPopup(firebaseAuth,provider).then((userCred) => {
-      firebaseAuth.onAuthStateChanged(cred => {
-        if(cred){
-          cred.getIdToken().then(token => {
-            validateUserJWTToken(token).then(data => {
-              dispatch(setUsersDetails(data));
-            }) 
-            navigate("/",{replace:true})
-          })
+    await signInWithPopup(firebaseAuth, provider).then((userCred) => {
+      firebaseAuth.onAuthStateChanged((cred) => {
+        if (cred) {
+          cred.getIdToken().then((token) => {
+            validateUserJWTToken(token).then((data) => {
+              dispatch(setUserDetails(data));
+            });
+            navigate("/", { replace: true });
+          });
         }
-      })
-    })
+      });
+    });
   };
 
-  const signUpWithEmailPass =async () => {
-    if(userEmail  === '' || password  === '' || confirm_password === ''){
-      console.log('they are empty');
-    }else{
-      if(password === confirm_password){
+  const signUpWithEmailPass = async () => {
+    if (userEmail === "" || password === "" || confirm_password === "") {
+      dispatch(alertInfo("Required fields should not be empty"));
+    } else {
+      if (password === confirm_password) {
         setUserEmail("");
-        setPassword("");
         setConfirm_password("");
-        await createUserWithEmailAndPassword(firebaseAuth,userEmail,password).then(userCred => {
+        setPassword("");
+        await createUserWithEmailAndPassword(
+          firebaseAuth,
+          userEmail,
+          password
+        ).then((userCred) => {
           firebaseAuth.onAuthStateChanged((cred) => {
-            if(cred){
+            if (cred) {
               cred.getIdToken().then((token) => {
                 validateUserJWTToken(token).then((data) => {
-                  dispatch(setUsersDetails(data));
-                })
-                navigate("/",{replace:true})
-
-              })
+                  dispatch(setUserDetails(data));
+                });
+                navigate("/", { replace: true });
+              });
             }
-          })
-        })
-      }else{
-        //alert pass
+          });
+        });
+      } else {
+        dispatch(alertWarning("Password doesn't match"));
       }
     }
-  }
-
+  };
 
   const signInWithEmailPass = async () => {
-    if(userEmail !== "" && password !== ""){
-      await signInWithEmailAndPassword(firebaseAuth,userEmail,password).then(userCred => {
-        firebaseAuth.onAuthStateChanged((cred) => {
-          if(cred){
-            cred.getIdToken().then((token) => {
-              validateUserJWTToken(token).then((data) => {
-                dispatch(setUsersDetails(data));
-              })
-              navigate("/",{replace:true})
-            })
-          }
-        })
-      })
-    }else{
-      //alert message
+    if (userEmail !== "" && password !== "") {
+      await signInWithEmailAndPassword(firebaseAuth, userEmail, password).then(
+        (userCred) => {
+          firebaseAuth.onAuthStateChanged((cred) => {
+            if (cred) {
+              cred.getIdToken().then((token) => {
+                validateUserJWTToken(token).then((data) => {
+                  dispatch(setUserDetails(data));
+                });
+                navigate("/", { replace: true });
+              });
+            }
+          });
+        }
+      );
+    } else {
+      dispatch(alertWarning("Password doesn't match"));
     }
-  }
+  };
 
   return (
     <div className="w-screen h-screen relative overflow-hidden flex">

@@ -1,8 +1,16 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
+  
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      backgroundColor: {
+        'vivid-yellow': '#FFD700', // Add your desired hexadecimal color code
+      },
+      textColor: {
+        'vivid-yellow': '#FFD700', // Add your desired hexadecimal color code
+      },
       width: {
         150: "150px",
         190: "190px",
@@ -45,6 +53,7 @@ module.exports = {
         "2xl": "1536px",
       },
       colors: {
+        wback:"#191920",
         yell:"#FFCB13",
         headingColor: "#2e2e2e",
         wheadingColor: "#ffffff",

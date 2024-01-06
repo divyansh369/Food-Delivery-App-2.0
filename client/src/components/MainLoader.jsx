@@ -1,165 +1,108 @@
-// import React from "react";
-// import "../assets/css/loader.css";
-// // import { SunspotLoader } from "react-awesome-loaders";
-
-// const MainLoader = () => {
-//   return (
-//     <div className="flex items-center justify-center container">
-//       <svg viewBox="0 0 100 100">
-//         <g
-//           fill="none"
-//           stroke="#000"
-//           stroke-linecap="round"
-//           stroke-linejoin="round"
-//           stroke-width="6"
-//         >
-//           <path d="M 21 40 V 59">
-//             <animateTransform
-//               attributeName="transform"
-//               attributeType="XML"
-//               type="rotate"
-//               values="0 21 59; 180 21 59"
-//               dur="2s"
-//               repeatCount="indefinite"
-//             />
-//           </path>
-//           <path d="M 79 40 V 59">
-//             <animateTransform
-//               attributeName="transform"
-//               attributeType="XML"
-//               type="rotate"
-//               values="0 79 59; -180 79 59"
-//               dur="2s"
-//               repeatCount="indefinite"
-//             />
-//           </path>
-//           <path d="M 50 21 V 40">
-//             <animate
-//               attributeName="d"
-//               values="M 50 21 V 40; M 50 59 V 40"
-//               dur="2s"
-//               repeatCount="indefinite"
-//             />
-//           </path>
-//           <path d="M 50 60 V 79">
-//             <animate
-//               attributeName="d"
-//               values="M 50 60 V 79; M 50 98 V 79"
-//               dur="2s"
-//               repeatCount="indefinite"
-//             />
-//           </path>
-//           <path d="M 50 21 L 79 40 L 50 60 L 21 40 Z">
-//             <animate
-//               attributeName="stroke"
-//               values="rgba(0,0,0,1); rgba(0,0,0,0)"
-//               dur="2s"
-//               repeatCount="indefinite"
-//             />
-//           </path>
-//           <path d="M 50 40 L 79 59 L 50 79 L 21 59 Z" />
-//           <path d="M 50 59 L 79 78 L 50 98 L 21 78 Z">
-//             <animate
-//               attributeName="stroke"
-//               values="rgba(0,0,0,0); rgba(0,0,0,1)"
-//               dur="2s"
-//               repeatCount="indefinite"
-//             />
-//           </path>
-//           <animateTransform
-//             attributeName="transform"
-//             attributeType="XML"
-//             type="translate"
-//             values="0 0; 0 -19"
-//             dur="2s"
-//             repeatCount="indefinite"
-//           />
-//         </g>
-//       </svg>
-//     </div>
-//   );
-// };
-
-// export default MainLoader;
-
 import React from "react";
+import "../assets/css/loader.css";
 
 const MainLoader = () => {
   return (
     <div className="flex items-center justify-center container">
-      {/* <svg viewBox="0 0 100 100"> */}
-      <svg viewBox="0 0 100 100" style={{ width: '300px', height: '500px' }}>
-
-        <g fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="6" >
-          {/* left line */}
-          <path d="M 21 40 V 59">
-            <animateTransform
-              attributeName="transform"
-              attributeType="XML"
-              type="rotate"
-              values="0 21 59; 180 21 59"
-              dur="2s"
-              repeatCount="indefinite"
-            />
-          </path>
-          {/* right line */}
-          <path d="M 79 40 V 59">
-            <animateTransform
-              attributeName="transform"
-              attributeType="XML"
-              type="rotate"
-              values="0 79 59; -180 79 59"
-              dur="2s"
-              repeatCount="indefinite"
-            />
-          </path>
-          {/* top line */}
-          <path d="M 50 21 V 40">
-            <animate
-              attributeName="d"
-              values="M 50 21 V 40; M 50 59 V 40"
-              dur="2s"
-              repeatCount="indefinite"
-            />
-          </path>
-          {/* bottom line */}
-          <path d="M 50 60 V 79">
-            <animate
-              attributeName="d"
-              values="M 50 60 V 79; M 50 98 V 79"
-              dur="2s"
-              repeatCount="indefinite"
-            />
-          </path>
-          {/* top box */}
-          <path d="M 50 21 L 79 40 L 50 60 L 21 40 Z">
-            <animate
-              attributeName="stroke"
-              values="rgba(255,255,255,1); rgba(100,100,100,0)"
-              dur="2s"
-              repeatCount="indefinite"
-            />
-          </path>
-          {/* mid box */}
-          <path d="M 50 40 L 79 59 L 50 79 L 21 59 Z" />
-          {/* bottom box */}
-          <path d="M 50 59 L 79 78 L 50 98 L 21 78 Z">
-            <animate
-              attributeName="stroke"
-              values="rgba(100,100,100,0); rgba(255,255,255,1)"
-              dur="2s"
-              repeatCount="indefinite"
-            />
-          </path>
-          <animateTransform
-            attributeName="transform"
-            attributeType="XML"
-            type="translate"
-            values="0 0; 0 -19"
-            dur="2s"
-            repeatCount="indefinite"
-          />
-        </g>
+      <svg width="100" height="100" viewBox="0 0 300 300">
+        <defs>
+          <linearGradient
+            id="gradient-fill"
+            gradientUnits="userSpaceOnUse"
+            x1="0"
+            y1="300"
+            x2="300"
+            y2="0"
+          >
+            <stop offset="0%">
+              <animate
+                attributeName="stop-color"
+                values="#00E06B;#CB0255;#00E06B"
+                dur="5s"
+                repeatCount="indefinite"
+              />
+            </stop>
+            <stop offset="100%">
+              <animate
+                attributeName="stop-color"
+                values="#04AFC8;#8904C5;#04AFC8"
+                dur="8s"
+                repeatCount="indefinite"
+              />
+            </stop>
+          </linearGradient>
+          <clipPath id="clip">
+            <rect
+              className="square s1"
+              x="0"
+              y="0"
+              rx="12"
+              ry="12"
+              height="90"
+              width="90"
+            ></rect>
+            <rect
+              className="square s2"
+              x="100"
+              y="0"
+              rx="12"
+              ry="12"
+              height="90"
+              width="90"
+            ></rect>
+            <rect
+              className="square s3"
+              x="200"
+              y="0"
+              rx="12"
+              ry="12"
+              height="90"
+              width="90"
+            ></rect>
+            <rect
+              className="square s4"
+              x="0"
+              y="100"
+              rx="12"
+              ry="12"
+              height="90"
+              width="90"
+            ></rect>
+            <rect
+              className="square s5"
+              x="200"
+              y="100"
+              rx="12"
+              ry="12"
+              height="90"
+              width="90"
+            ></rect>
+            <rect
+              className="square s6"
+              x="0"
+              y="200"
+              rx="12"
+              ry="12"
+              height="90"
+              width="90"
+            ></rect>
+            <rect
+              className="square s7"
+              x="100"
+              y="200"
+              rx="12"
+              ry="12"
+              height="90"
+              width="90"
+            ></rect>
+          </clipPath>
+        </defs>
+        <rect
+          className="gradient"
+          clipPath="url('#clip')"
+          height="300"
+          width="300"
+        ></rect>
       </svg>
     </div>
   );
